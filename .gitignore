@@ -1,4 +1,19 @@
+# Virtual environments
 venv/
-__pychache__/
+.venv/
+
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Environment variables / secrets
 .env
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Editor settings
+.vscode/
 .idea/
