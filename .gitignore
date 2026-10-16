@@ -17,3 +17,6 @@ __pycache__/
 # Editor settings
 .vscode/
 .idea/
+
+# Generated reports
+reports/

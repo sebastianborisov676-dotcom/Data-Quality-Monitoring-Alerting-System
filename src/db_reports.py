@@ -11,7 +11,7 @@ def get_latest_check_results(session: Session) -> list[DataCheck]:
     latest_subquery = (
         session.query(
             DataCheck.check_name,
-            func.max(DataCheck.id).label("latest.id"),
+            func.max(DataCheck.id).label("latest_id"),
         )
         .group_by(DataCheck.check_name)
         .subquery()
@@ -19,7 +19,7 @@ def get_latest_check_results(session: Session) -> list[DataCheck]:
 
     latest_rows = (
         session.query(DataCheck)
-        .join(latest_subquery, DataCheck.id == latest_subquery.c.latest.id)
+        .join(latest_subquery, DataCheck.id == latest_subquery.c.latest_id)
         .order_by(DataCheck.id.desc())
         .all()
     )
