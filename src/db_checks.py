@@ -1,7 +1,10 @@
 from typing import Iterable, Dict, Any
 from sqlalchemy.orm import Session
-
+from src.db import SessionLocal
 from src.models import DataCheck, Alert
+from src.logger import get_logger
+
+logger = get_logger(__name__)
 
 MAX_CHECK_HISTORY = 250
 
@@ -94,3 +97,17 @@ def store_checks_and_alerts(session: Session, results: Iterable[Dict[str, Any]],
     except Exception:
         session.rollback()
         raise
+
+
+
+def save_check_results(check_results):
+    with SessionLocal() as session:
+        checks_inserted, alerts_created = store_checks_and_alerts(
+            session,
+            check_results
+        )
+
+        logger.info(
+            f"Stored {checks_inserted} check results "
+            f"and created {alerts_created} alerts."
+        )
